@@ -46,9 +46,6 @@ python main.py
 ```
 Schedule Weekly Execution. Linux/macOS (Cron): Open your crontab (crontab -e) and add a line like:
 ```
-
-Code snippet
-
 0 6 * * FRI python /path/to/your/market_radar/main.py
 ```
 
