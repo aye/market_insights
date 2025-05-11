@@ -36,15 +36,16 @@ def scrape_website(source):
                 selector = config.get('selector')
                 attribute = config.get('attribute')
                 extract_href_flag = config.get('extract_href', False)
+                add_domain = config.get('add_domain')
 
                 if selector:
                     elements = soup.select(selector)
                     if elements and i < len(elements):
                         element = elements[i]
                         if attribute:
-                            item_data[field] = element.get(attribute)
+                            item_data[field] = add_domain + element.get(attribute)
                         else:
-                            item_data[field] = element.get_text(strip=True)
+                            item_data[field] = element.get_text(separator=" ", strip=True)
                             if extract_href_flag:
                                 item_data[f"{field}_href"] = element.get('href')
                     else:
