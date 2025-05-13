@@ -6,7 +6,7 @@ def load_config(filepath="config.yaml"):
     with open(filepath, 'r') as f:
         return yaml.safe_load(f)
 
-def scrape_website(source):
+def scrape_website(source, max_items_to_scrape):
     url = source['url']
     schema = source.get('schema', {})
     name = source.get('name', 'Unknown Source')
@@ -30,7 +30,7 @@ def scrape_website(source):
             print(f"Warning: Could not determine the number of items on {url}. Skipping.")
             return []
 
-        for i in range(num_items):
+        for i in range(min(num_items, max_items_to_scrape)):
             item_data = {}
             for field, config in schema.items():
                 selector = config.get('selector')
@@ -69,9 +69,13 @@ def scrape_website(source):
 def scrape_all(config_file="config.yaml"):
     config = load_config(config_file)
     all_scraped_data = []
+    max_items_to_scrape = 100
+    if 'max_items_to_scrape' in config:
+        max_items_to_scrape = config['max_items_to_scrape']
+
     if 'sources' in config:
         for source in config['sources']:
-            data = scrape_website(source)
+            data = scrape_website(source, max_items_to_scrape)
             if data:
                 all_scraped_data.extend(data) # Extend the list as scrape_website now returns a list
     return all_scraped_data

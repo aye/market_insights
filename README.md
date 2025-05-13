@@ -1,6 +1,6 @@
 ### Install Libraries:
 ```
-pip install requests beautifulsoup4 PyYAML google-generativeai google-api-python-client google-auth-httplib2 google-auth-oauthlib
+pip install requests beautifulsoup4 PyYAML google-generativeai google-api-python-client google-auth-httplib2 google-auth-oauthlib pyyaml
 ```
 Configure your config.yaml:
 
@@ -25,10 +25,14 @@ sources:
       link:
         selector: ".teaser__link"
         attribute: "href" 
+        add_domain: "https://www.example.com/" #optional, otherwise leave empty
 gemini_api_key: "YOUR_GEMINI_API_KEY"
 google_docs:
   credentials_file: "path/to/your/credentials.json"
   document_name: "Weekly Market Insights Radar - {date}" # {date} will be replaced
+database:
+  enabled: true 
+  filename: "market_news.db"
 ```
 
 ### Set Up Google Cloud and Google Docs API:
